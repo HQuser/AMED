@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: -ms-flexbox; /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap; /* IE10 */
+            flex-wrap: wrap;
+            /*  padding: 0 4px;*/
+            /*  flex-direction: row;*/
+            border-radius: 10px;
+        }
+
+        /* Create four equal columns that sits next to each other */
+        .column {
+            -ms-flex: 100%; /* IE10 */
+            flex: 100%;
+            max-width: 50%;
+            padding: 0 0px;
+        }
+
+        .column img {
+            /*  margin-top: 8px;*/
+            vertical-align: middle;
+            width: 100%;
+            height: 38px;
+            padding: 1px;
+        }
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media screen and (max-width: 800px) {
+            .column {
+                -ms-flex: 50%;
+                flex: 50%;
+                max-width: 50%;
+            }
+        }
+
+        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .column {
+                -ms-flex: 100%;
+                flex: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .img-2 img {
+            width: 100%;
+            height: 76px;
+        }
+
+        .sep {
+            border-right: 1px solid gray;
+        }
+
+        .flex-container {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        .space-between {
+            justify-content: space-between;
+        }
+
+        /*    INPUT*/
+        input[type="date"] {
+            position: relative;
+            width: 120px;
+            border: 1px solid #c6c6c6;
+            border-radius: 5px;
+            width: 48%;
+        }
+
+        input[type="text"] {
+            position: relative;
+            /*width: 120px;*/
+            border: 1px solid #c6c6c6;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            position: relative;
+            /*width: 120px;*/
+            border: 1px solid blue;
+            background-color: #304ffe;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+            width: 100%;
+        }
+
+        /* create a new arrow, because we are going to mess up the native one
+        see "List of symbols" below if you want another, you could also try to add a font-awesome icon.. */
+        input[type="date"]:after {
+            /*font-family: "Font Awesome 5 Free";*/
+            font-weight: 900;
+            content: url("./icons/cal_compressed.png");
+            color: #555;
+            border-left: 1px solid #c6c6c6;
+            padding: 0 5px;
+        }
+
+        /* change color of symbol on hover */
+        input[type="date"]:hover:after {
+            color: #bf1400;
+        }
+
+        /* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: auto;
+            height: auto;
+            color: transparent;
+            background: transparent;
+        }
+
+        /* adjust increase/decrease button */
+        input[type="date"]::-webkit-inner-spin-button {
+            z-index: 1;
+        }
+
+        /* adjust clear button */
+        input[type="date"]::-webkit-clear-button {
+            z-index: 1;
+        }
+
+        .lookup-btn {
+            font-family: inherit; /* 1 */
+            font-size: 100%; /* 1 */
+            line-height: 1.15; /* 1 */
+            margin: 0; /* 2 */
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            background: whitesmoke;
+            font-size: 12px;
+            /*margin: 5px;*/
+            color: gray;
+        }
+
+        .lookup-doc-btn:hover {
+            background: #F783AC;
+            color: white;
+        }
+
+        .lookup-clust-btn:hover {
+            background: #FD7E14;
+            color: white;
+        }
+
+        .lookup-snip-btn:hover {
+            background: #83ACF7;
+            color: white;
+        }
+
+        .lookup-btn:hover img {
+            filter: brightness(0) invert(1);
+
+        }
+
+        .lookup-btn img {
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body  style="background-color: gray">
+<!-- SideBar -->
+<div class="row">
+    <div class="col-3  bg-dark position-fixed" id="sticky-sidebar" style="background-color: white">
+        <!-- Filter -->
+        <div class="header">Filter</div>
+
+        <!-- Lookup -->
+        <div class="lookup">
+            <div class="title">Lookup</div>
+            <button class="lookup-btn lookup-clust-btn lookup-btn">
+                <img src="./icons/clusters.png" width=40 height=40/>
+                <br/>
+                Cluster
+            </button>
+
+            <button class="lookup-btn lookup-doc-btn lookup-btn">
+                <img src="./icons/documents.png" width=30 height=40/>
+                <br/>
+                Cluster
+            </button>
+
+            <button class="lookup-btn lookup-snip-btn lookup-btn">
+                <img src="./icons/snippets.png" width=40 height=40/>
+                <br/>
+                Cluster
+            </button>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter">
+            <div class="title">Filter</div>
+            <!-- Time -->
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Time
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Last Day</a></li>
+                    <li><a href="#">Last Week</a></li>
+                    <li><a href="#">Last Month</a></li>
+                    <li><a href="#">Last Year</a></li>
+                </ul>
+            </div>
+
+            <!-- Date -->
+            <div class="d-flex justify-content-center">
+                <input type="date" name="dateFrom" id="dateFrom"/> - <input type="date" name="dateTo" id="dateTo"/>
+            </div>
+
+            <!-- Location -->
+            <div>
+                <input type="text" name="locationInput" id="locationInput" placeholder="Location..."/>
+            </div>
+
+            <!-- Search Engine -->
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Search Engine
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Google</a></li>
+                    <li><a href="#">Yahoo!</a></li>
+                    <li><a href="#">Bing</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="drildown">
+            <div class="title">Drilldown</div>
+            <form action="#" method="GET">
+                <div>
+                    <input type="text" name="andInput" id="andInput" placeholder="Must contain..."/>
+                </div>
+                <div>
+                    <input type="text" name="orInput" id="orInput" placeholder="May contain..."/>
+                </div>
+
+                <div>
+                    <input type="text" name="notInput" id="notInput" placeholder="Must NOT contain..."/>
+                </div>
+
+                <div>
+                    <input type="submit" value="Dill Down"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <div class="col offset-3">
+        <!-- Cluster results -->
+        <div class="row">
+            <h5>Cluster title goes here</h5>
+            <!--    Document Results  -->
+            <div class="col-md-12">
+                <!-- Document container -->
+                <div class="row fle">
+                    <!-- Document 1 -->
+                    <div class="col-md-4">
+                        <div class="row">
+                            <!-- Image -->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="column">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                    </div>
+                                    <div class="column">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Links -->
+                            <div class="col-md-8">
+                                <div><a href="#">this is some text</a></div>
+                                <div><a href="#">this is some text</a></div>
+                                <div><a href="#">this is some text</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Doc 2 -->
+                    <!-- Document 1 -->
+                    <div class="col-md-4">
+                        <div class="row">
+                            <!-- Image -->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="column">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                    </div>
+                                    <div class="column img-2">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Links -->
+                            <div class="col-md-8">
+                                <div><a href="#">this is some text</a></div>
+                                <div><a href="#">this is some text</a></div>
+                                <div><a href="#">this is some text</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Doc 3 -->
+                    <!-- Document 1 -->
+                    <div class="col-md-4">
+                        <div class="row">
+                            <!-- Image -->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="column img-2">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                    </div>
+                                    <div class="column img-2">
+                                        <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Links -->
+                            <div class="col-md-8">
+                                <div><a href="#">this is some text</a></div>
+                                <div><a href="#">this is some text</a></div>
+                                <div><a href="#">this is some text</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.0/cjs/popper-base.min.js"></script>
+
+</body>
+</html>

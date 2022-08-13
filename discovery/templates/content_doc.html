@@ -1,0 +1,87 @@
+{% extends "./index.html" %}
+{% load research_extras %}
+
+{% block content %}
+<!--Cluster Results-->
+{# for each cluster #}
+{% for document, document_values in documents.items %}
+    <div class="row dynacloud" id="{{ document }}" style="margin-bottom: 20px;">
+        <div class="col-md-12 cluster-result">
+            <!-- Document container -->
+            <div class="row flex-container space-between">
+                <!-- Document 1 -->
+                <div class="col-md-12">
+                    <div class="row explore-more-docs">
+                        <div class="col-md-12 doc-title doc-title-long" id="{{ document }}" style="padding: 0; margin: 0">
+                            <h6>
+                            {{ document_values.summary|truncatewords:10 }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-3" style="overflow: hidden">
+                            <div class="row">
+                                {# get images #}
+                                {% gallery snippets documents|get_snippets:document docs_id %}
+                            </div>
+                        </div>
+                        <!-- Links -->
+                        <div class="col-md-9 snippets-titles-doc">
+                            {# get links #}
+                            {% links snippets documents|get_snippets:document docs_id %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div> <!-- Doc Row -->
+        <!-- Explore More Container -->
+        <div class="col-md-12 rel_click" style="padding: 0">
+            <!-- Explore More Button -->
+            <button type="button" class="collapsible explore-btn">Explore...</button>
+
+            <!-- Explore More Drop Down -->
+            <div class="content">
+                <!-- Related Docs!!! -->
+                <div class="lead text-muted" style="border-bottom: 1px solid #555">Related Documents...</div>
+
+                <div class="row  flex-container space-between" style="margin-bottom: 30px; border-bottom: 5px solid #555">
+                <div class="col-md-12">
+                    <div class="row check-rel-doc">
+                    {% for doc_id in document_values.rel_docs_list|slice:":3" %}
+                        <div class="col-md-4 check-border" style="border-right: 1px solid black">
+                            <div class="rel_clust_content">
+                                <div class="col-md-12">
+                                    <!-- Contents -->
+                                    <div class="row" style="min-height: 250px">
+                                        <!-- Gallery -->
+                                        <div class="col-md-12 check-gallery">
+                                            <div class="row">
+                                                {% gallery snippets documents|get_snippets:doc_id doc_id %}
+                                            </div>
+                                        </div>
+                                        <!-- Links -->
+                                        <div class="col-md-12 small-fonts snippets-titles-doc" style="padding-left: 0; padding-right: 0;">
+                                            {% links snippets documents|get_snippets:doc_id doc_id %}
+                                        </div>
+                                    </div>
+                                </div> <!-- Content Upper Body -->
+                            </div> <!-- Rel Cluster  Content-->
+
+                        <!-- Doc Title -->
+                            <div class="doc-title"
+                                 style="margin-left:-15px; background: #F783AC; color: white; margin-right: -15px; min-height: 63px">
+                                <div style="margin-left: 15px; cursor: pointer" class="align-middle;"
+                                     onclick="jump('{{ doc_id }}')">
+                                    {{ documents|get_summary:doc_id|truncatewords:10 }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div> <!-- Rel Clust Row -->
+                </div> <!-- col md 12 row -->
+                </div> <!-- col md 12 -->
+            </div> <!-- Explore More Content -->
+        </div> <!-- Cluster Results Col END -->
+    </div> <!-- Cluster Res Upper Body Col -->
+{% endfor %}
+
+{% endblock %}

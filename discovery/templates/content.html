@@ -1,0 +1,148 @@
+{% extends "./index.html" %}
+{% load research_extras %}
+
+{% block content %}
+<!--Cluster Results-->
+{# for each cluster #}
+{% for cluster, cluster_values in clusters.items %}
+    <div class="row" id="{{ cluster }}" style="margin-bottom: 20px;">
+        <div class="col-md-12 cluster-result">
+            <h5 class="cluster-title">
+                {{ cluster_values.summary|truncatewords:10 }}
+            </h5>
+            <!-- Document container -->
+            <div class="row flex-container space-between">
+                <!-- Document 1 -->
+                {# for each document #}
+                {% for docs_id in cluster_values.docs_list|slice:":3" %}
+                    <div class="col-md-3">
+                        <div class="row doc-title" id="{{ docs_id }}">
+                            {# {{ docs_id }} #}
+                            {{ documents|get_summary:docs_id|truncatewords:7 }}
+                        </div>
+                        <div class="row">
+                            <!-- Image -->
+                            <div class="col-md-12 check-gallery" style="overflow: hidden">
+                                <div class="row">
+                                    {# get images #}
+                                    {% gallery snippets documents|get_snippets:docs_id docs_id %}
+                                </div>
+                            </div>
+                            <!-- Links -->
+                            <div class="col-md-12 snippets-titles-doc" style="margin-left: -30px">
+                                {# get links #}
+                                {% links snippets documents|get_snippets:docs_id docs_id %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if cluster_values.docs_list|length > 2 and forloop.counter != 3 %}
+                        <!-- sep -->
+                        <div class="col-md-1 flex-container justify-content-center">
+                            <span class="vertical-ruler"></span>
+                        </div>
+                    {% endif %}
+
+                    {% if cluster_values.docs_list|length == 2 and forloop.counter != 2 %}
+                        <!-- sep -->
+                        <div class="col-md-1 flex-container justify-content-center">
+                            <span class="vertical-ruler"></span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div> <!-- Doc Row -->
+        </div> <!-- Cluster Res Upper Body Col -->
+
+        <!-- Explore More Container -->
+        <div class="col-md-12 rel_click" style="padding: 0">
+            <!-- Explore More Button -->
+            <button type="button" class="collapsible explore-btn">Explore...</button>
+
+            <!-- Explore More Drop Down -->
+            <div class="content">
+                {% for docs_id in cluster_values.docs_list|slice:"3:" %}
+                    <div class="row explore-more-docs" style="margin-left: 15px; padding-right: 15px">
+                        <div class="col-md-12 doc-title doc-title-long" id="{{ docs_id }}" style="padding:5px">
+                            {{ documents|get_summary:docs_id|truncatewords:10 }}
+                        </div>
+                        <!-- Image -->
+                        <div class="col-md-3">
+                            <div class="row">
+                                {# get images #}
+                                {% gallery snippets documents|get_snippets:docs_id docs_id %}
+                            </div>
+                        </div>
+                        <!-- Links -->
+                        <div class="col-md-9 snippets-titles-doc">
+                            {# get links #}
+                            {% links snippets documents|get_snippets:docs_id docs_id %}
+                        </div>
+
+                        <div class="row" style="padding: 10px"></div>
+                    </div> <!-- Row Explore More DOCS -->
+                {% endfor %}
+
+                <!-- Related Clusters!!! -->
+                <div class="lead text-muted" style="border-bottom: 1px solid #555">Related Clusters...</div>
+
+                <div class="row" style="margin-bottom: 30px; border-bottom: 5px solid #555">
+                    {% for clust_id in cluster_values.rel_clusts_list|slice:":3" %}
+                        <div class="col-md-4" style="border-right: 1px solid black">
+                        {% if forloop.counter == 1 %}
+                            <div class="rel_clust_content">
+                        {% endif %}
+
+                        {% if forloop.counter == 2 %}
+                            <div class="rel_clust_content" style="margin-left: -15px">
+                        {% endif %}
+
+                        {% if forloop.counter == 3 %}
+                            <div class="rel_clust_content" style="margin-left: -15px">
+                        {% endif %}
+                                <div class="col-md-12">
+                                    <!-- Contents -->
+                                    <div class="row" style="min-height: 230px">
+                                        <!-- Gallery -->
+                                        <div class="col-md-6 check-gallery-half gallery-may-expand">
+                                            <div class="row">
+                                                {% gallery snippets None clusters|get_clust_docs:clust_id documents %}
+                                            </div>
+                                        </div>
+
+                                        <!-- Links -->
+                                        <div class="col-md-6 small-fonts snippets-titles-doc may-expand check-links-half">
+                                            {% links snippets None clusters|get_clust_docs:clust_id documents %}
+                                        </div>
+                                    </div>
+                                         <!-- docs -->
+                                    <div class="col-md-12" style="min-height: 110px">
+                                        {% documents_title documents clusters|get_clust_docs:clust_id %}
+                                    </div>
+                                </div> <!-- Content Upper Body -->
+                            </div> <!-- Rel Cluster  Content-->
+
+                        <!-- Clluster Title -->
+                        {% if forloop.counter == 1 %}
+                            <div class="cluster-title"
+                                 style="background: #FD7E14; color: white; margin-right: -15px;">
+                        {% endif %}
+                        {% if forloop.counter == 2 %}
+                            <div class="cluster-title"
+                                 style="background: #FD7E14; color: white; margin-left: -15px; margin-right: -15.5px;">
+                        {% endif %}
+                        {% if forloop.counter == 3 %}
+                            <div class="cluster-title" style="background: #FD7E14; color: white; margin-left: -15px;">
+                        {% endif %}
+                                <div style="margin-left: 10px; margin-bottom: -20px; cursor: pointer; min-height: 82px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;" class="align-middle;"
+                                     onclick="jump('{{ clust_id }}')">
+                                    {{ clusters|get_summary:clust_id|truncatewords:10 }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div> <!-- Rel Clust Row -->
+            </div> <!-- Explore More Content -->
+        </div> <!-- Cluster Results Col END -->
+    </div> <!-- Each Cluster Res Row END -->
+{% endfor %}
+
+{% endblock %}

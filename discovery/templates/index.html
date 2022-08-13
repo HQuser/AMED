@@ -1,0 +1,252 @@
+{% load static %}
+{% load research_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multimedia Aggregated Information Discovery Mechanism </title>
+    <!-- Bootstrap -->
+    <link href="{% static 'research/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/bootstrap-grid.min.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/bootstrap-reboot.min.css' %}" rel="stylesheet">
+    <!-- Picker-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <!-- Font AWESOME -->
+    <script src="https://kit.fontawesome.com/0c51316cc6.js" crossorigin="anonymous"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+
+    <!-- Main -->
+    <link href="{% static 'research/css/input.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/gallery.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/radiobutton.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/collapsable.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/searchbar.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'research/css/jquery.bsPhotoGallery.css' %}" rel="stylesheet">
+
+    {#    <!-- Begin Inspectlet Asynchronous Code -->#}
+    <script>UST_CT = [];
+    UST = {
+        s: Date.now(), addTag: function (tag) {
+            UST_CT.push(tag)
+        }
+    };
+    (function () {
+        var ust_s = document.createElement('STYLE');
+        ust_s.id = 'ust_body_style';
+        ust_s.appendChild(document.createTextNode('body {visibility: hidden}'));
+        document.head.appendChild(ust_s);
+    })();
+    setTimeout(function () {
+        var el = document.getElementById('ust_body_style');
+        el && el.remove()
+    }, 800);</script>
+    <script src="http://localhost/userTrack/server/ab/127.0.0.1:8000.ab.js?v=3.2.2" defer></script>
+    <script src="http://localhost/userTrack/server/ust.min.js?v=3.2.2" async></script>
+
+{#    EXPERIUKENTAL SETUP#}
+
+    <!-- Install this snippet AFTER the Hotjar tracking code. -->
+<script>
+var userId = your_user_id || null; // Replace your_user_id with your own if available.
+window.hj('identify', userId, {
+    // Add your own custom attributes here. Some EXAMPLES:
+    // 'Signed up': '2019—06-20Z', // Signup date in ISO-8601 format.
+    // 'Last purchase category': 'Electronics', // Send strings with quotes around them.
+    // 'Total purchases': 15, // Send numbers without quotes.
+    // 'Last purchase date': '2019-06-20Z', // Send dates in ISO-8601 format.
+    // 'Last refund date': null, // Send null when no value exists for a user.
+});
+</script>
+</head>
+
+<body style="background-color: #f5f5f5">
+<div class="vertical-nav bg-dark" id="sidebar">
+    <div class="py-4 px-3 mb-4 bg-dark filter-header text-center">
+        <div class="media-body">
+            <h4 class="font-weight-white mb-0">Filter Panel</h4>
+        </div>
+    </div>
+
+    <!--    <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p>-->
+
+    <ul class="nav flex-column bg-dark mb-0">
+
+        <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Lookup</p>
+        <li class="nav-item">
+            <!-- Lookup -->
+            <div class="lookup">
+                <button class="lookup-btn lookup-clust-btn lookup-btn" onclick="lookup_cluster()">
+                    <img src="{% static 'research/icons/clusters.png' %}" width=40 height=40/>
+                    <br/>
+                    {#                                        {{ clusters|get_count }}  #}
+                    Clusters
+                </button>
+
+                <button class="lookup-btn lookup-doc-btn lookup-btn" onclick="lookup_document()">
+                    <img src="{% static 'research/icons/documents.png' %}" width=30 height=40/>
+                    <br/>
+                    {#                                        {{ documents|get_count }}  #}
+                    Documents
+                </button>
+
+                <button class="lookup-btn lookup-snip-btn lookup-btn" onclick="lookup_snippet()">
+                    <img src="{% static 'research/icons/snippets.png' %}" width=40 height=40/>
+                    <br/>
+                    {#                                        {{ snippets|get_count }}  #}
+                    Snippets
+                </button>
+            </div>
+        </li>
+
+        {#        TAG CLOUD #}
+        {#        <li class="nav-item">#}
+        {#            <div id="dynacloud"></div>#}
+        {#        </li>#}
+
+        <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0 title">Search Parameters</p>
+        <li class="nav-item">
+            <!-- Date -->
+            <!--            <input type="date" name="dateFrom" id="dateFrom"/> - <input type="date" name="dateTo" id="dateTo"/>-->
+            <!--            <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />-->
+            <div id="reportrange">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <i class="fa fa-caret-down"></i>
+            </div>
+        </li>
+
+        <li>
+            <div>
+                <button class="vis-btn" onclick="window.open('viz')"><img class="white-image"
+                                                                          src="{% static 'research/icons/viz.png' %}"
+                                                                          width=23 height=20/> Visualization
+                </button>
+            </div>
+        </li>
+
+        <div class="drildown">
+            <p class="text-white font-weight-bold text-uppercase px-4 small pb-3 mb-0" style="margin-left:-5px">Advanced
+                Query Formulation</p>
+            <form method="GET" id="drilldown">
+                <div>
+                    <div class="group">
+                        <input type="text" name="andInput" id="andInput" required="required" autocomplete="off"><span
+                            class="highlight"></span><span class="bar"></span>
+                        <label>Must Contain...</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="group">
+                        <input type="text" name="orInput" id="orInput" required="required" autocomplete="off"><span
+                            class="highlight"></span><span class="bar"></span>
+                        <label>May Contain...</label>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="group">
+                        <input type="text" name="notInput" id="notInput" required="required" autocomplete="off"><span
+                            class="highlight"></span><span class="bar"></span>
+                        <label>Must NOT Contain...</label>
+                    </div>
+                </div>
+
+                <div class="group autocomplete" style="width: 272px">
+                    <input type="text" name="location" id="location" required="required" autocomplete="off"><span
+                        class="highlight"></span><span class="bar"></span>
+                    <label>Location...</label>
+                </div>
+
+                <div>
+                    <input type="submit" value="Filter" formnovalidate/>
+                </div>
+            </form>
+        </div>
+    </ul>
+</div>
+
+<div class="page-content p-5" id="content" style="background: #f5f5f5">
+    <div class="row top-header-bg">
+        <!-- Toggle button -->
+        <button id="sidebarCollapse" type="button" class="btn btn-dark bg-dark rounded-pill shadow-sm px-4 mb-4">
+            <small class="text-uppercase font-weight-bold">Toggle</small>
+        </button>
+
+        <div class="wrapper">
+            <div class="search_box">
+                <input type="text" placeholder="what are you looking for?" id="ftsearch">
+                <i class="fas fa-search" id="implicitFTS" style="cursor: pointer"></i>
+                <input type="submit" style="visibility: hidden; position: absolute" onclick="full_text_search()"/>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Page content -->
+    <div class="row">
+        <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Preview right pane -->
+        <div class="col-md-4 doc-preview-pane" style="height: min-content">
+            {#            {% for docs_id in cluster_values.docs_list|slice:"3:4" %}#}
+            <div class="doc-title" style="border-bottom: 1px solid pink">
+                {% if wiki %}
+                    <h5 class="text-justify">{{ wiki.query }}</h5>
+
+                {% else %}
+                    <h5> Document Overview Panel <br> Click on a document to view it here
+                        <button type="button" class="close" aria-label="Close" id="close-preview-doc">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                {% endif %}
+            </div>
+
+            {% if wiki %}
+                <div class="doc-preview-snippets text-justify check-if-empty-right hlt">{{ wiki.content | safe }}</div>
+
+            {% else %}
+                <div class="doc-preview-snippets check-if-empty-right"></div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Poper js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.0/umd/popper.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'research/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'research/js/bootstrap.min.js' %}"></script>
+
+<!-- Countries JS -->
+<script src="{% static 'research/js/country.js' %}"></script>
+<!-- Gallery JS -->
+<script src="{% static 'research/js/jquery.bsPhotoGallery.js' %}"></script>
+
+<!-- Date Picker JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- Hit highlighter -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/7.0.0/mark.min.js"></script>
+
+<!-- Tag Cloud -->
+{#<script type="text/javascript" src="{% static 'research/js/jquery.dynacloud-5.js' %}"></script>#}
+
+<!-- Main JS -->
+<script type="text/javascript" src="{% static 'research/js/main.js' %}"></script>
+</body> <!-- End of BODY -- >
+</html>
+sear

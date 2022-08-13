@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>RGraph - Tree Animation</title>
+
+    <!-- CSS Files -->
+    <link type="text/css" href="{% static 'research/css/base.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static 'research/css/RGraph.css' %}" rel="stylesheet"/>
+
+    <!--[if IE]><script language="javascript" type="text/javascript" src="{% static 'research/js/excanvas.js' %}"></script><![endif]-->
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous"></script>
+
+    {#    <!-- Begin Inspectlet Asynchronous Code -->#}
+    <script>UST_CT = [];
+    UST = {
+        s: Date.now(), addTag: function (tag) {
+            UST_CT.push(tag)
+        }
+    };
+    (function () {
+        var ust_s = document.createElement('STYLE');
+        ust_s.id = 'ust_body_style';
+        ust_s.appendChild(document.createTextNode('body {visibility: hidden}'));
+        document.head.appendChild(ust_s);
+    })();
+    setTimeout(function () {
+        var el = document.getElementById('ust_body_style');
+        el && el.remove()
+    }, 800);</script>
+    <script src="http://localhost/userTrack/server/ab/127.0.0.1:8000.ab.js?v=3.2.2" defer></script>
+    <script src="http://localhost/userTrack/server/ust.min.js?v=3.2.2" async></script>
+</head>
+<!-- JIT Library File -->
+<script language="javascript" type="text/javascript" src="{% static 'research/js/jit.js' %}"></script>
+
+<!-- Example File -->
+<script language="javascript" type="text/javascript" src="{% static 'research/js/ex1cl.js' %}"></script>
+
+<style>
+    .ctabtn {
+        width: 100%;
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #f1f1f1;
+        color: black;
+    }
+
+    .ctabtn:hover {
+        background-color: black;
+        color: white;
+    }
+</style>
+<body onload="init();">
+<div id="container">
+
+    <div id="left-container">
+
+
+        <div class="text">
+            <button id="backtrack" onclick="backtrack()" class="ctabtn">
+                Back
+            </button>
+            <br>
+            <br>
+            This is an interactive visualization of the retrieved search results.<br/><br/>
+            <b>Click</b> on a multimedia documents group (orange colored), multimedia document (pink colored) or
+            multimedia snippet (blue colored) to move browse the contents associate with it.<br/><br/>
+            The selected item will be centered and contents of the selected item will be displayed on the right
+            panel.<br/><br/>
+            <b>Use the mouse wheel</b> to zoom and <b>drag and drop the canvas</b> to pan.
+
+        </div>
+
+        <div id="id-list"></div>
+
+
+        {#<div style="text-align:center;"><a href="example1.js">See the Example Code</a></div>            #}
+    </div>
+
+    <div id="center-container">
+        <div id="infovis"></div>
+    </div>
+
+    <div id="right-container">
+
+        <div id="inner-details"></div>
+
+    </div>
+
+    <div id="log"></div>
+</div>
+</body>
+</html>

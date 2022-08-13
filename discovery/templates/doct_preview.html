@@ -1,0 +1,94 @@
+{% load research_extras %}
+
+<div class="doc-title" style="border-bottom: 1px solid pink">
+    <h5>{{ documents|get_summary:doc_id|truncatewords:10 }}
+        <button type="button" class="close" aria-label="Close" id="close-preview-doc">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </h5>
+</div>
+
+<div class="doc-preview-snippets">
+    {#    {% all_snippets snippets documents|get_snippets:doc_id '22d' %}#}
+    {#    {% for snip_id in documents|get_snippets:doc_id %}#}
+    {% for snip in snip_list %}
+        {#        {% snippets|get_item:snip_id as snip%}#}
+        {#        {{ snip.type }}#}
+        {% if snip.type == 'web' %}
+            <div class="web">
+                <a href="{{ snip.url }}">
+                    {{ snip.title }} - <span class="domain">{{ domain|get_domain:snip.url }}</span>
+                </a>
+                <p class="text-muted">{{ snip.snippet }}</p>
+            </div>
+            <br>
+        {% endif %}
+
+        {% if snip.type == 'image' %}
+            <div class="image">
+                <a href="{{ snip.url }}">
+                    <img src="{{ snip.thumbnail }}"
+                         alt="{{ snip.title }}"
+                         height="100%"
+                         width="100%">
+                </a>
+                <a href="{{ snip.url }}">
+                    {#                <span>Image: </span>#}
+                    "
+                    <h7 class="text-center font-italic text-muted"> {{ snip.title }} </h7>
+                    "
+                </a>
+            </div>
+            <br>
+        {% endif %}
+
+        {% if snip.type == 'news' %}
+            <div class="news">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img
+                                src="{{ snip.thumbnail }}"
+                                alt="{{ snip.title }}"
+                                height="100%"
+                                width="100%">
+                    </div>
+                    <div class="col-md-9">
+                        <a href="{{ snip.url }}">{{ snip.title }} <br> <span
+                                class="text-info">{{ domain|get_domain:snip.url }}</span></a>
+                    </div>
+
+                    <div class="col-md-12">
+                        <p class="text-muted">{{ snip.uploaded }} - {{ snip.snippet }}</p>
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+
+        {% if snip.type == 'video' %}
+            <br>
+            <div class="video">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img
+                                src="{{ snip.thumbnail }}"
+                                alt="{{ snip.title }}"
+                                height="100%"
+                                width="100%">
+                    </div>
+                    <div class="col-md-9">
+                        <a href="{{ snip.url }}"><i class="fa fa-youtube-play" aria-hidden="true"></i> {{ snip.title }}
+                            <br> <span
+                                    class="text-info">{{ domain|get_domain:snip.url }}</span></a>
+                    </div>
+
+                    <div class="col-md-12">
+                        <p class="text-muted">{{ snip.uploaded }} - {{ snip.snippet }}</p>
+                    </div>
+                </div>
+                <br>
+            </div>
+        {% endif %}
+
+    {% endfor %}
+</div>

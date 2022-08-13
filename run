@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -ex
+pip install transformers==2.3.0
+pip install sentence-transformers
+python3 -c "import nltk; nltk.download('all')"
+timeout -k 10 10 python /code/discovery/manage.py runserver
