@@ -11,7 +11,6 @@ hdbscan
 nltk
 scipy
 scikit-learn
-powerai
 sentencepiece
 numpy
 tqdm
