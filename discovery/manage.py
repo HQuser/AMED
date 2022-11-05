@@ -19,7 +19,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# Configure Django App for Heroku.
-import django_on_heroku
-django_on_heroku.settings(locals())
