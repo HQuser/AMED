@@ -19,3 +19,4 @@ sentence_transformers
 python-dateutil 
 pillow
 django-on-heroku
+gunicorn
