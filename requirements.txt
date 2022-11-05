@@ -18,3 +18,4 @@ transformers==2.3.0
 sentence_transformers 
 python-dateutil 
 pillow
+pip install django-on-heroku
